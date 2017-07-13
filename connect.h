@@ -7,28 +7,28 @@
 class CConnect;
 
 typedef
-	IDispatchImpl<_IDTExtensibility2, &__uuidof(_IDTExtensibility2), &__uuidof(__AddInDesignerObjects), 1, 0>
-	IDTExtensibilityImpl;
+IDispatchImpl<_IDTExtensibility2, &__uuidof(_IDTExtensibility2), &__uuidof(__AddInDesignerObjects), 1, 0>
+IDTExtensibilityImpl;
 
 typedef
-	IDispatchImpl<_FormRegionStartup, &__uuidof(_FormRegionStartup), &__uuidof(__Outlook), -1, -1>
-	FormRegionStartupImpl;
+IDispatchImpl<_FormRegionStartup, &__uuidof(_FormRegionStartup), &__uuidof(__Outlook), -1, -1>
+FormRegionStartupImpl;
 
 typedef
-	IDispatchImpl<ICustomTaskPaneConsumer, &__uuidof(ICustomTaskPaneConsumer), &__uuidof(__Office), -1, -1>
-	ICustomTaskPaneConsumerImpl;
+IDispatchImpl<ICustomTaskPaneConsumer, &__uuidof(ICustomTaskPaneConsumer), &__uuidof(__Office), -1, -1>
+ICustomTaskPaneConsumerImpl;
 
 typedef
-	IDispatchImpl<IRibbonExtensibility, &__uuidof(IRibbonExtensibility), &__uuidof(__Office), -1, -1>
-	IRibbonExtensibilityImpl;
+IDispatchImpl<IRibbonExtensibility, &__uuidof(IRibbonExtensibility), &__uuidof(__Office), -1, -1>
+IRibbonExtensibilityImpl;
 
 typedef
-	IDispatchImpl<IRibbonCallback, &__uuidof(IRibbonCallback), &__uuidof(__SampleNativeCOMAddinLib), -1, -1>
-	IRibbonCallbackImpl;
+IDispatchImpl<IRibbonCallback, &__uuidof(IRibbonCallback), &__uuidof(__SampleNativeCOMAddinLib), -1, -1>
+IRibbonCallbackImpl;
 
 typedef
-	IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents)>
-	ApplicationEventSink;
+IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents)>
+ApplicationEventSink;
 
 class ATL_NO_VTABLE CConnect
 	: public CComObjectRootEx<CComSingleThreadModel>
@@ -70,7 +70,7 @@ public:
 
 	BEGIN_COM_MAP(CConnect)
 		COM_INTERFACE_ENTRY2(IDispatch, IRibbonCallback)
-		COM_INTERFACE_ENTRY(IDTExtensibility2)
+		COM_INTERFACE_ENTRY(_IDTExtensibility2)
 		COM_INTERFACE_ENTRY(_FormRegionStartup)
 		COM_INTERFACE_ENTRY(ICustomTaskPaneConsumer)
 		COM_INTERFACE_ENTRY(IRibbonExtensibility)
@@ -85,16 +85,16 @@ public:
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct() { return S_OK;	}
-	void FinalRelease()	{ }
+	HRESULT FinalConstruct() { return S_OK; }
+	void FinalRelease() { }
 
 public:
 	// IDTExtensibility2 interface
 	STDMETHOD(OnConnection)(IDispatch * Application, ext_ConnectMode ConnectMode, IDispatch *AddInInst, SAFEARRAY **custom);
-	STDMETHOD(OnDisconnection)(ext_DisconnectMode RemoveMode, SAFEARRAY **custom );
-	STDMETHOD(OnAddInsUpdate)(SAFEARRAY **custom );
-	STDMETHOD(OnStartupComplete)(SAFEARRAY **custom );
-	STDMETHOD(OnBeginShutdown)(SAFEARRAY **custom );
+	STDMETHOD(OnDisconnection)(ext_DisconnectMode RemoveMode, SAFEARRAY **custom);
+	STDMETHOD(OnAddInsUpdate)(SAFEARRAY **custom);
+	STDMETHOD(OnStartupComplete)(SAFEARRAY **custom);
+	STDMETHOD(OnBeginShutdown)(SAFEARRAY **custom);
 
 	// FormRegionStartup interface
 	STDMETHOD(GetFormRegionStorage)(BSTR, IDispatch*, long, OlFormRegionMode, OlFormRegionSize, VARIANT*);
