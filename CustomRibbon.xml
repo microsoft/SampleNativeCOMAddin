@@ -1,0 +1,11 @@
+<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+  <ribbon>
+    <tabs>
+      <tab id="CustomTab" label="Custom Tab">
+        <group id="CustomGroup" label="Custom Group">
+          <button id="CustomButton" imageMso="HappyFace" size="large" label="Click me!" onAction="Button1Clicked"/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>

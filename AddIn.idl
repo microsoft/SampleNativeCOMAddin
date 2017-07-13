@@ -1,0 +1,63 @@
+/*!-----------------------------------------------------------------------
+	addin.idl
+
+	Contains the declaration for the type library
+-----------------------------------------------------------------------!*/
+#include "olectl.h"
+#include "ids.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(TYPELIB_GUID),
+	version(1.0),
+	helpstring("SampleNativeCOMAddin 1.0 Type Library")
+]
+library SampleNativeCOMAddinLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(ADDIN_CLSID),
+		helpstring("Connect Class")
+	]
+	coclass Connect
+	{
+		[default] interface IUnknown;
+	};
+
+	[
+		object,
+		uuid(IRIBBONCALLBACK_IID),
+		dual,
+		nonextensible,
+		helpstring("IRibbonCallBack Interface"),
+		pointer_default(unique)
+	]
+	interface IRibbonCallback : IDispatch
+	{
+		[id(1), helpstring("Method Button1Click")] 
+		HRESULT Button1Clicked([in] IDispatch* /*IRibbonControl*/ ribbonControl);
+	};
+
+	[
+		object,
+		uuid(ISAMPLECONTROL_IID),
+		dual,
+		nonextensible,
+		helpstring("ISampleControl Interface"),
+		pointer_default(unique)
+	]
+	interface ISampleControl : IDispatch
+	{ 
+	};
+
+	[
+		uuid(SAMPLECONTROL_CLSID),
+		control,
+		helpstring("SampleControl Class")
+	]
+	coclass SampleControl
+	{
+		[default] interface ISampleControl;
+	};
+};

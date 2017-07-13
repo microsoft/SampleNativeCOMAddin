@@ -1,0 +1,33 @@
+HKCR
+{
+	%PROGID%.1 = s 'Outlook Sample Control Class Object for Sample Native COM Addin'
+	{
+		CLSID = s '{%CLSID%}'
+	}
+	%PROGID% = s 'Outlook Sample Control Class Object for Sample Native COM Addin'
+	{
+		CLSID = s '{%CLSID%}'
+		CurVer = s '%PROGID%.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {%CLSID%} = s 'Outlook Sample Control Class Object for Sample Native COM Addin'
+		{
+			ProgID = s '%PROGID%.1'
+			VersionIndependentProgID = s '%PROGID%'
+			'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'Control'
+			'ToolboxBitmap32' = s '%MODULE%, 111'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '%OLEMISC%'
+			}
+			'TypeLib' = s '{%TYPELIB%}'
+			'Version' = s '1.0'
+		}
+	}
+}

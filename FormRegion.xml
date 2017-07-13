@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormRegion>
+  <Title>Outlook Sample Native Form Region</Title>
+  <FormRegionType>separate</FormRegionType>
+  <ShowInspectorRead>false</ShowInspectorRead>
+  <ShowReadingPane>false</ShowReadingPane>
+  <icons>
+    <page>addin</page>
+  </icons>
+</FormRegion>
