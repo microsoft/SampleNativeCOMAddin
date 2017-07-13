@@ -19,8 +19,8 @@ typedef
 	FormRegionEventSink;
 
 class FormRegionWrapper
-	: public FormRegionEventSink
-	, public OlkCommandButtonEventSink
+	: public FormRegionEventSink,
+ public OlkCommandButtonEventSink
 {
 public:
 	static HRESULT Setup(_FormRegion* pFormRegion);

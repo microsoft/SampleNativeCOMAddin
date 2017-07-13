@@ -6,12 +6,11 @@
 
 #define ReturnHrOnFailure(h) { hr = (h); ATLASSERT(SUCCEEDED((hr))); if (FAILED(hr)) return hr; }
 
-
 /*!-----------------------------------------------------------------------
 	FormRegionWrapper implementation
 -----------------------------------------------------------------------!*/
 
-_ATL_FUNC_INFO FormRegionWrapper::VoidFuncInfo = {CC_STDCALL, VT_EMPTY, 0, 0};
+_ATL_FUNC_INFO FormRegionWrapper::VoidFuncInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 
 /*static*/ HRESULT FormRegionWrapper::Setup(_FormRegion* pFormRegion) throw()
 {
@@ -73,10 +72,10 @@ void FormRegionWrapper::OnButton1Click()
 	// When the button on the form region is clicked send the item
 	if (m_spMailItem)
 	{
-		MessageBoxW(NULL
-			, L"Going to send the message now!"
-			, L"Message from the sample native form region"
-			, MB_OK | MB_ICONINFORMATION);
+		MessageBoxW(NULL,
+			L"Going to send the message now!",
+			L"Message from the sample native form region",
+			MB_OK | MB_ICONINFORMATION);
 
 		m_spMailItem->Send();
 

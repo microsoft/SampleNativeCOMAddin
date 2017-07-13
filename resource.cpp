@@ -58,7 +58,7 @@ SAFEARRAY* GetOFSResource(int nId)
 		return NULL;
 
 	SAFEARRAY* psa = NULL;
-	SAFEARRAYBOUND dim = {dwSizeInBytes, 0};
+	SAFEARRAYBOUND dim = { dwSizeInBytes, 0 };
 
 	psa = SafeArrayCreate(VT_UI1, 1, &dim);
 

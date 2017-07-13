@@ -22,10 +22,10 @@ LRESULT CSampleControl::OnBnClickedButton1(WORD /*wNotifyCode*/, WORD /*wID*/, H
 		}
 	}
 
-	::MessageBoxW(NULL
-		, L"You clicked button1 on our SampleControl!"
-		, L"Message from sample control"
-		, MB_OK | MB_ICONINFORMATION);
+	::MessageBoxW(NULL,
+		L"You clicked button1 on our SampleControl!",
+		L"Message from sample control",
+		MB_OK | MB_ICONINFORMATION);
 
 	return S_OK;
 }
@@ -44,4 +44,3 @@ HRESULT CSampleControl::Apply()
 	// Save any settings from the property page if needed.
 	return S_OK;
 }
-

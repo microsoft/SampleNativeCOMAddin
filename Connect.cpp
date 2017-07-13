@@ -12,31 +12,31 @@
 	CConnect implementation
 -----------------------------------------------------------------------!*/
 
-_ATL_FUNC_INFO CConnect::DispatchFuncInfo = {CC_STDCALL, VT_EMPTY, 1, {VT_DISPATCH}};
+_ATL_FUNC_INFO CConnect::DispatchFuncInfo = { CC_STDCALL, VT_EMPTY, 1, {VT_DISPATCH} };
 
 CConnect::CConnect()
 {
 }
 
-STDMETHODIMP CConnect::OnConnection
-	( IDispatch *pApplication
-	, ext_ConnectMode /* ConnectMode */
-	, IDispatch* /* pAddInInst */
-	, SAFEARRAY ** /* custom */ )
+STDMETHODIMP CConnect::OnConnection(
+	IDispatch *pApplication,
+	ext_ConnectMode /* ConnectMode */,
+	IDispatch* /* pAddInInst */,
+	SAFEARRAY ** /* custom */)
 {
 	if (!pApplication)
 		return E_POINTER;
 
 	m_pApplication = pApplication;
 
+	// MessageBoxW(NULL, L"OnConnection fired", L"OnConnection fired", MB_OK | MB_ICONINFORMATION);
+
 	ApplicationEventSink::DispEventAdvise(m_pApplication);
 
 	return S_OK;
 }
 
-STDMETHODIMP CConnect::OnDisconnection
-	( ext_DisconnectMode /*RemoveMode*/
-	, SAFEARRAY ** /*custom*/ )
+STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEARRAY ** /*custom*/)
 {
 	if (m_pApplication)
 		ApplicationEventSink::DispEventUnadvise(m_pApplication);
@@ -60,15 +60,15 @@ STDMETHODIMP CConnect::OnBeginShutdown(SAFEARRAY ** /*custom*/)
 	return S_OK;
 }
 
-STDMETHODIMP CConnect::Invoke
-	( DISPID dispidMember
-	, const IID &riid
-	, LCID lcid
-	, WORD wFlags
-	, DISPPARAMS *pdispparams
-	, VARIANT *pvarResult
-	, EXCEPINFO *pexceptinfo
-	, UINT *puArgErr )
+STDMETHODIMP CConnect::Invoke(
+	DISPID dispidMember,
+	const IID &riid,
+	LCID lcid,
+	WORD wFlags,
+	DISPPARAMS *pdispparams,
+	VARIANT *pvarResult,
+	EXCEPINFO *pexceptinfo,
+	UINT *puArgErr)
 {
 	HRESULT hr;
 
@@ -107,13 +107,13 @@ STDMETHODIMP CConnect::Invoke
 	FormRegionStartup interface implementation
 -----------------------------------------------------------------------!*/
 
-STDMETHODIMP CConnect::GetFormRegionStorage
-	( BSTR /* bstrFormRegionName */
-	, IDispatch * /* pDispItem */
-	, long /* LCID */
-	, Outlook::OlFormRegionMode /* formRegionMode */
-	, Outlook::OlFormRegionSize /* formRegionSize */
-	, __out VARIANT * pVarStorage )
+STDMETHODIMP CConnect::GetFormRegionStorage(
+	BSTR /* bstrFormRegionName */,
+	IDispatch * /* pDispItem */,
+	long /* LCID */,
+	Outlook::OlFormRegionMode /* formRegionMode */,
+	Outlook::OlFormRegionSize /* formRegionSize */,
+	__out VARIANT * pVarStorage)
 {
 	SAFEARRAY* pSafeArray = GetOFSResource(IDS_FORMREGIONSTORAGE);
 
@@ -130,10 +130,10 @@ STDMETHODIMP CConnect::BeforeFormRegionShow(_FormRegion *pFormRegion)
 	return FormRegionWrapper::Setup(pFormRegion);
 }
 
-STDMETHODIMP CConnect::GetFormRegionManifest
-	( BSTR /* bstrFormRegionName */
-	, long /* LCID */
-	, __out VARIANT * pvarManifest )
+STDMETHODIMP CConnect::GetFormRegionManifest(
+	BSTR /* bstrFormRegionName */,
+	long /* LCID */,
+	__out VARIANT * pvarManifest)
 {
 	BSTR bstr = GetXMLResource(IDS_FORMREGIONMANIFEST);
 
@@ -145,11 +145,11 @@ STDMETHODIMP CConnect::GetFormRegionManifest
 	return S_OK;
 }
 
-STDMETHODIMP CConnect::GetFormRegionIcon
-	( BSTR /* bstrFormRegionName */
-	, long /* LCID */
-	, Outlook::OlFormRegionIcon /* formRegionIcon */
-	, __out VARIANT* /* pvarIcon */ )
+STDMETHODIMP CConnect::GetFormRegionIcon(
+	BSTR /* bstrFormRegionName */,
+	long /* LCID */,
+	Outlook::OlFormRegionIcon /* formRegionIcon */,
+	__out VARIANT* /* pvarIcon */)
 {
 	return S_OK;
 }
@@ -171,7 +171,7 @@ HRESULT CConnect::CTPFactoryAvailable(ICTPFactory *CTPFactoryInst)
 
 HRESULT CConnect::GetCustomUI(BSTR /* ribbonID */, BSTR *ribbonXml)
 {
-	if(!ribbonXml)
+	if (!ribbonXml)
 		return E_POINTER;
 
 	// Get the same ribbon xml for every ribbonID
@@ -181,10 +181,10 @@ HRESULT CConnect::GetCustomUI(BSTR /* ribbonID */, BSTR *ribbonXml)
 
 HRESULT CConnect::Button1Clicked(IDispatch* /* ribbonControl */)
 {
-	MessageBoxW(NULL
-		, L"Going to create a task pane now!"
-		, L"Message from ribbon button."
-		, MB_OK | MB_ICONINFORMATION);
+	MessageBoxW(NULL,
+		L"Going to create a task pane now!",
+		L"Message from ribbon button.",
+		MB_OK | MB_ICONINFORMATION);
 
 	return HrCreateSampleTaskPane();
 }
@@ -216,4 +216,3 @@ HRESULT CConnect::HrCreateSampleTaskPane()
 
 	return hr;
 }
-

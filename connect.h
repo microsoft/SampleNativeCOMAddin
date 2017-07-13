@@ -31,36 +31,37 @@ IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents)>
 ApplicationEventSink;
 
 class ATL_NO_VTABLE CConnect
-	: public CComObjectRootEx<CComSingleThreadModel>
-	, public CComCoClass<CConnect, &__uuidof(Connect)>
-	, public IDTExtensibilityImpl
-	, public FormRegionStartupImpl
-	, public ICustomTaskPaneConsumerImpl
-	, public IRibbonExtensibilityImpl
-	, public IRibbonCallbackImpl
-	, public ApplicationEventSink
+	: public CComObjectRootEx<CComSingleThreadModel>,
+ public CComCoClass<CConnect, &__uuidof(Connect)>,
+ public IDTExtensibilityImpl,
+ public FormRegionStartupImpl,
+ public ICustomTaskPaneConsumerImpl,
+ public IRibbonExtensibilityImpl,
+ public IRibbonCallbackImpl,
+ public ApplicationEventSink
 {
 public:
 	CConnect();
 
 	// Override IDispatch Invoke
-	STDMETHOD(Invoke)(DISPID dispidMember
-		, const IID &riid
-		, LCID lcid
-		, WORD wFlags
-		, DISPPARAMS *pdispparams
-		, VARIANT *pvarResult
-		, EXCEPINFO *pexceptinfo
-		, UINT *puArgErr);
+	STDMETHOD(Invoke)(DISPID dispidMember,
+		const IID &riid,
+		LCID lcid,
+		WORD wFlags,
+		DISPPARAMS *pdispparams,
+		VARIANT *pvarResult,
+		EXCEPINFO *pexceptinfo,
+		UINT *puArgErr);
 
 	// Setup the registration found in addin.rgs
 	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
 	{
 		ATL::_ATL_REGMAP_ENTRY regMapEntries[] =
-		{ { OLESTR("PROGID"), ADDIN_PROGID }
-		, { OLESTR("CLSID"), ADDIN_CLSID_STR }
-		, { OLESTR("TYPELIB"), TYPELIB_GUID_STR }
-		, { NULL, NULL }
+		{
+			{ OLESTR("PROGID"), ADDIN_PROGID },
+			{ OLESTR("CLSID"), ADDIN_CLSID_STR },
+			{ OLESTR("TYPELIB"), TYPELIB_GUID_STR },
+			{ NULL, NULL }
 		};
 
 		return ATL::_pAtlModule->UpdateRegistryFromResource(IDR_ADDIN, bRegister, regMapEntries);
