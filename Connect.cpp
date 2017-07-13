@@ -14,6 +14,8 @@
 
 _ATL_FUNC_INFO CConnect::OptionsPagesAddInfo = { CC_STDCALL, VT_EMPTY, 1, {VT_DISPATCH} };
 _ATL_FUNC_INFO CConnect::MapiLogonCompleteInfo = { CC_STDCALL, VT_EMPTY, 0 };
+_ATL_FUNC_INFO CConnect::FolderSwitchInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
+_ATL_FUNC_INFO CConnect::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 
 CConnect::CConnect()
 {
@@ -34,15 +36,26 @@ STDMETHODIMP CConnect::OnConnection(
 
 	ApplicationEventSink::DispEventAdvise(m_pApplication);
 
+	m_pApplication->ActiveExplorer(&m_pExplorer);
+	ExplorerEventSink::DispEventAdvise(m_pExplorer, &__uuidof(Outlook::ExplorerEvents));
+
 	return S_OK;
 }
 
 STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEARRAY ** /*custom*/)
 {
-	if (m_pApplication)
-		ApplicationEventSink::DispEventUnadvise(m_pApplication);
+	if (m_pExplorer)
+	{
+		ExplorerEventSink::DispEventUnadvise(m_pExplorer);
+		m_pExplorer.Release();
+	}
 
-	m_pApplication.Release();
+	if (m_pApplication)
+	{
+		ApplicationEventSink::DispEventUnadvise(m_pApplication);
+		m_pApplication.Release();
+	}
+
 	return S_OK;
 }
 
@@ -93,7 +106,11 @@ STDMETHODIMP CConnect::Invoke(
 		hr = IDTExtensibilityImpl::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
 
 	if (DISP_E_MEMBERNOTFOUND == hr)
+	{
+		// TODO: Figure out how to tell which one to invoke.
 		hr = ApplicationEventSink::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
+		hr = ExplorerEventSink::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
+	}
 
 	// There is no use trying to call Invoke on IRibbonExtensiblilityImpl and
 	// ICustomTaskPaneConsumerImpl because they only contain one method with
@@ -205,8 +222,18 @@ HRESULT CConnect::OptionsPagesAdd(IDispatch *pages)
 
 HRESULT CConnect::MapiLogonComplete()
 {
-	// MessageBoxW(NULL, L"Done with MAPI Logon!", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+	//MessageBoxW(NULL, L"MapiLogonComplete", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 	return S_OK;
+}
+
+void CConnect::OnClose()
+{
+	//MessageBoxW(NULL, L"OnClose", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+}
+
+void CConnect::FolderSwitch()
+{
+	//MessageBoxW(NULL, L"FolderSwitch", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 }
 
 HRESULT CConnect::HrCreateSampleTaskPane()

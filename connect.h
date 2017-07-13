@@ -6,45 +6,31 @@
 
 class CConnect;
 
-typedef
-IDispatchImpl<_IDTExtensibility2, &__uuidof(_IDTExtensibility2), &__uuidof(__AddInDesignerObjects), 1, 0>
-IDTExtensibilityImpl;
+typedef IDispatchImpl<_IDTExtensibility2, &__uuidof(_IDTExtensibility2), &__uuidof(__AddInDesignerObjects), 1, 0> IDTExtensibilityImpl;
+typedef IDispatchImpl<_FormRegionStartup, &__uuidof(_FormRegionStartup), &__uuidof(__Outlook), -1, -1> FormRegionStartupImpl;
+typedef IDispatchImpl<ICustomTaskPaneConsumer, &__uuidof(ICustomTaskPaneConsumer), &__uuidof(__Office), -1, -1> ICustomTaskPaneConsumerImpl;
+typedef IDispatchImpl<IRibbonExtensibility, &__uuidof(IRibbonExtensibility), &__uuidof(__Office), -1, -1> IRibbonExtensibilityImpl;
+typedef IDispatchImpl<IRibbonCallback, &__uuidof(IRibbonCallback), &__uuidof(__SampleNativeCOMAddinLib), -1, -1> IRibbonCallbackImpl;
+typedef IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents_11)> ApplicationEventSink;
+typedef IDispEventSimpleImpl<2, CConnect, &__uuidof(ExplorerEvents_10)> ExplorerEventSink;
 
-typedef
-IDispatchImpl<_FormRegionStartup, &__uuidof(_FormRegionStartup), &__uuidof(__Outlook), -1, -1>
-FormRegionStartupImpl;
-
-typedef
-IDispatchImpl<ICustomTaskPaneConsumer, &__uuidof(ICustomTaskPaneConsumer), &__uuidof(__Office), -1, -1>
-ICustomTaskPaneConsumerImpl;
-
-typedef
-IDispatchImpl<IRibbonExtensibility, &__uuidof(IRibbonExtensibility), &__uuidof(__Office), -1, -1>
-IRibbonExtensibilityImpl;
-
-typedef
-IDispatchImpl<IRibbonCallback, &__uuidof(IRibbonCallback), &__uuidof(__SampleNativeCOMAddinLib), -1, -1>
-IRibbonCallbackImpl;
-
-typedef
-IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents_11)>
-ApplicationEventSink;
-
-class ATL_NO_VTABLE CConnect
-	: public CComObjectRootEx<CComSingleThreadModel>,
- public CComCoClass<CConnect, &__uuidof(Connect)>,
- public IDTExtensibilityImpl,
- public FormRegionStartupImpl,
- public ICustomTaskPaneConsumerImpl,
- public IRibbonExtensibilityImpl,
- public IRibbonCallbackImpl,
- public ApplicationEventSink
+class ATL_NO_VTABLE CConnect :
+	public CComObjectRootEx<CComSingleThreadModel>,
+	public CComCoClass<CConnect, &__uuidof(Connect)>,
+	public IDTExtensibilityImpl,
+	public FormRegionStartupImpl,
+	public ICustomTaskPaneConsumerImpl,
+	public IRibbonExtensibilityImpl,
+	public IRibbonCallbackImpl,
+	public ApplicationEventSink,
+	public ExplorerEventSink
 {
 public:
 	CConnect();
 
 	// Override IDispatch Invoke
-	STDMETHOD(Invoke)(DISPID dispidMember,
+	STDMETHOD(Invoke)(
+		DISPID dispidMember,
 		const IID &riid,
 		LCID lcid,
 		WORD wFlags,
@@ -80,10 +66,14 @@ public:
 
 	static _ATL_FUNC_INFO OptionsPagesAddInfo;
 	static _ATL_FUNC_INFO MapiLogonCompleteInfo;
+	static _ATL_FUNC_INFO FolderSwitchInfo;
+	static _ATL_FUNC_INFO OnCloseInfo;
 
 	BEGIN_SINK_MAP(CConnect)
 		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventOptionsPagesAdd, OptionsPagesAdd, &OptionsPagesAddInfo)
 		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventMapiLogonComplete, MapiLogonComplete, &MapiLogonCompleteInfo)
+		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventFolderSwitch, FolderSwitch, &FolderSwitchInfo)
+		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventClose, OnClose, &OnCloseInfo)
 	END_SINK_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -118,9 +108,14 @@ public:
 	STDMETHOD(OptionsPagesAdd)(IDispatch* propertyPages);
 	STDMETHOD(MapiLogonComplete)();
 
+	// ExplorerEvents Methods
+	void __stdcall OnClose();
+	void __stdcall FolderSwitch();
+
 private:
 	STDMETHOD(HrCreateSampleTaskPane)(void);
 
+	_ExplorerPtr m_pExplorer;
 	_ApplicationPtr m_pApplication;
 	CComPtr<ICTPFactory> m_pCTPFactory;
 };
