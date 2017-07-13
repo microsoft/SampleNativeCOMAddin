@@ -27,7 +27,7 @@ IDispatchImpl<IRibbonCallback, &__uuidof(IRibbonCallback), &__uuidof(__SampleNat
 IRibbonCallbackImpl;
 
 typedef
-IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents)>
+IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents_11)>
 ApplicationEventSink;
 
 class ATL_NO_VTABLE CConnect
@@ -78,10 +78,12 @@ public:
 		COM_INTERFACE_ENTRY(IRibbonCallback)
 	END_COM_MAP()
 
-	static _ATL_FUNC_INFO DispatchFuncInfo;
+	static _ATL_FUNC_INFO OptionsPagesAddInfo;
+	static _ATL_FUNC_INFO MapiLogonCompleteInfo;
 
 	BEGIN_SINK_MAP(CConnect)
-		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents), dispidEventOptionsPagesAdd, OptionsPagesAdd, &DispatchFuncInfo)
+		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventOptionsPagesAdd, OptionsPagesAdd, &OptionsPagesAddInfo)
+		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventMapiLogonComplete, MapiLogonComplete, &MapiLogonCompleteInfo)
 	END_SINK_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -114,6 +116,7 @@ public:
 
 	// ApplicationEvents Methods
 	STDMETHOD(OptionsPagesAdd)(IDispatch* propertyPages);
+	STDMETHOD(MapiLogonComplete)();
 
 private:
 	STDMETHOD(HrCreateSampleTaskPane)(void);

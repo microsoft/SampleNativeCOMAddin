@@ -31,3 +31,4 @@ using namespace Forms;
 // dispids used for various events
 const DISPID dispidEventOnClose = 0xF004;
 const DISPID dispidEventOptionsPagesAdd = 0xF005;
+const DISPID dispidEventMapiLogonComplete = 0xFA90;

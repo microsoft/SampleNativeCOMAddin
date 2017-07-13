@@ -12,7 +12,8 @@
 	CConnect implementation
 -----------------------------------------------------------------------!*/
 
-_ATL_FUNC_INFO CConnect::DispatchFuncInfo = { CC_STDCALL, VT_EMPTY, 1, {VT_DISPATCH} };
+_ATL_FUNC_INFO CConnect::OptionsPagesAddInfo = { CC_STDCALL, VT_EMPTY, 1, {VT_DISPATCH} };
+_ATL_FUNC_INFO CConnect::MapiLogonCompleteInfo = { CC_STDCALL, VT_EMPTY, 0 };
 
 CConnect::CConnect()
 {
@@ -29,7 +30,7 @@ STDMETHODIMP CConnect::OnConnection(
 
 	m_pApplication = pApplication;
 
-	// MessageBoxW(NULL, L"OnConnection fired", L"OnConnection fired", MB_OK | MB_ICONINFORMATION);
+	// MessageBoxW(NULL, L"OnConnection fired", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 
 	ApplicationEventSink::DispEventAdvise(m_pApplication);
 
@@ -200,6 +201,12 @@ HRESULT CConnect::OptionsPagesAdd(IDispatch *pages)
 		return E_UNEXPECTED;
 
 	return spPages->Add(variant_t(SAMPLECONTROL_PROGID), bstr_t("Sample Options"));
+}
+
+HRESULT CConnect::MapiLogonComplete()
+{
+	// MessageBoxW(NULL, L"Done with MAPI Logon!", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+	return S_OK;
 }
 
 HRESULT CConnect::HrCreateSampleTaskPane()
