@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Connect.cpp" />
     <ClCompile Include="FormRegionWrapper.cpp" />
+    <ClCompile Include="MAPI\Defaults.cpp" />
     <ClCompile Include="MAPI\MapiStubLibrary.cpp" />
     <ClCompile Include="MAPI\StubUtils.cpp" />
     <ClCompile Include="Module.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="connect.h" />
     <ClInclude Include="FormRegionWrapper.h" />
     <ClInclude Include="ids.h" />
+    <ClInclude Include="MAPI\Defaults.h" />
     <ClInclude Include="outlook.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SampleControl.h" />

@@ -8,6 +8,7 @@
 #include "connect.h"
 #include "formregionwrapper.h"
 #include "MAPIx.h"
+#include "MAPI\Defaults.h"
 
 /*!-----------------------------------------------------------------------
 	CConnect implementation
@@ -21,6 +22,38 @@ _ATL_FUNC_INFO CConnect::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 CConnect::CConnect()
 {
 	m_bMAPIInitialized = false;
+}
+
+void TestMAPI()
+{
+	LPMAPISESSION lpMAPISession = NULL;
+
+	HRESULT hRes = MAPILogonEx(0, NULL, NULL,
+		MAPI_LOGON_UI | MAPI_NEW_SESSION | MAPI_EXPLICIT_PROFILE,
+		&lpMAPISession);
+	if (SUCCEEDED(hRes))
+	{
+		LPMDB lpMDB = NULL;
+		hRes = OpenDefaultMessageStore(lpMAPISession, NULL, &lpMDB);
+		if (SUCCEEDED(hRes))
+		{
+			LPMAPIFOLDER lpInbox = NULL;
+			hRes = OpenFolder(lpMDB, _T("Inbox"), &lpInbox);
+			if (SUCCEEDED(hRes))
+			{
+				MessageBoxW(NULL, L"Got Inbox", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+			}
+
+			if (lpInbox) lpInbox->Release();
+			lpInbox = NULL;
+		}
+
+		if (lpMDB) lpMDB->Release();
+		lpMDB = NULL;
+	}
+
+	if (lpMAPISession) lpMAPISession->Release();
+	lpMAPISession = NULL;
 }
 
 STDMETHODIMP CConnect::OnConnection(
@@ -38,6 +71,7 @@ STDMETHODIMP CConnect::OnConnection(
 		if (SUCCEEDED(hRes))
 		{
 			m_bMAPIInitialized = true;
+			//TestMAPI();
 		}
 	}
 

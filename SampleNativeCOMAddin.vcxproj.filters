@@ -12,6 +12,9 @@
     <ClCompile Include="MAPI\StubUtils.cpp">
       <Filter>MAPI</Filter>
     </ClCompile>
+    <ClCompile Include="MAPI\Defaults.cpp">
+      <Filter>MAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connect.h" />
@@ -21,6 +24,9 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SampleControl.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="MAPI\Defaults.h">
+      <Filter>MAPI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AddIn.rc" />
