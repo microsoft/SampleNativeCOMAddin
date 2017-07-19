@@ -52,6 +52,7 @@
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -142,6 +143,8 @@
   <ItemGroup>
     <ClCompile Include="Connect.cpp" />
     <ClCompile Include="FormRegionWrapper.cpp" />
+    <ClCompile Include="MAPI\MapiStubLibrary.cpp" />
+    <ClCompile Include="MAPI\StubUtils.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="resource.cpp" />
     <ClCompile Include="SampleControl.cpp" />

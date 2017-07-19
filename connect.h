@@ -118,6 +118,7 @@ private:
 	_ExplorerPtr m_pExplorer;
 	_ApplicationPtr m_pApplication;
 	CComPtr<ICTPFactory> m_pCTPFactory;
+	bool m_bMAPIInitialized;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Connect), CConnect)

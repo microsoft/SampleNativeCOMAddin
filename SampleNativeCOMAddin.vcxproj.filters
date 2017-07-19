@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Connect.cpp" />
+    <ClCompile Include="FormRegionWrapper.cpp" />
+    <ClCompile Include="Module.cpp" />
+    <ClCompile Include="resource.cpp" />
+    <ClCompile Include="SampleControl.cpp" />
+    <ClCompile Include="MAPI\MapiStubLibrary.cpp">
+      <Filter>MAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="MAPI\StubUtils.cpp">
+      <Filter>MAPI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="connect.h" />
+    <ClInclude Include="FormRegionWrapper.h" />
+    <ClInclude Include="ids.h" />
+    <ClInclude Include="outlook.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SampleControl.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AddIn.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="CustomRibbon.xml" />
+    <Xml Include="FormRegion.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="AddIn.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AddIn.def" />
+    <None Include="AddIn.rgs" />
+    <None Include="FormRegion.ofs" />
+    <None Include="SampleControl.rgs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MAPI">
+      <UniqueIdentifier>{6d664ea4-6b8f-46d9-b954-39f6b76b15be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

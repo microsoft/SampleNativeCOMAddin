@@ -7,6 +7,7 @@
 -----------------------------------------------------------------------!*/
 #include "connect.h"
 #include "formregionwrapper.h"
+#include "MAPIx.h"
 
 /*!-----------------------------------------------------------------------
 	CConnect implementation
@@ -19,6 +20,7 @@ _ATL_FUNC_INFO CConnect::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 
 CConnect::CConnect()
 {
+	m_bMAPIInitialized = false;
 }
 
 STDMETHODIMP CConnect::OnConnection(
@@ -30,20 +32,31 @@ STDMETHODIMP CConnect::OnConnection(
 	if (!pApplication)
 		return E_POINTER;
 
+	if (!m_bMAPIInitialized)
+	{
+		HRESULT hRes = MAPIInitialize(NULL);
+		if (SUCCEEDED(hRes))
+		{
+			m_bMAPIInitialized = true;
+		}
+	}
+
 	m_pApplication = pApplication;
 
-	// MessageBoxW(NULL, L"OnConnection fired", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+	//MessageBoxW(NULL, L"OnConnection fired", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 
 	ApplicationEventSink::DispEventAdvise(m_pApplication);
 
 	m_pApplication->ActiveExplorer(&m_pExplorer);
 	ExplorerEventSink::DispEventAdvise(m_pExplorer, &__uuidof(Outlook::ExplorerEvents));
 
+
 	return S_OK;
 }
 
 STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEARRAY ** /*custom*/)
 {
+
 	if (m_pExplorer)
 	{
 		ExplorerEventSink::DispEventUnadvise(m_pExplorer);
@@ -54,6 +67,12 @@ STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEAR
 	{
 		ApplicationEventSink::DispEventUnadvise(m_pApplication);
 		m_pApplication.Release();
+	}
+
+	if (m_bMAPIInitialized)
+	{
+		MAPIUninitialize();
+		m_bMAPIInitialized = false;
 	}
 
 	return S_OK;
