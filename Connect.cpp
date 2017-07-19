@@ -9,6 +9,9 @@
 #include "formregionwrapper.h"
 #include "MAPIx.h"
 #include "MAPI\Defaults.h"
+#include <string>
+
+using std::wstring;
 
 /*!-----------------------------------------------------------------------
 	CConnect implementation
@@ -24,12 +27,12 @@ CConnect::CConnect()
 	m_bMAPIInitialized = false;
 }
 
-void TestMAPI()
+void TestMAPI(wstring caller)
 {
 	LPMAPISESSION lpMAPISession = NULL;
 
-	HRESULT hRes = MAPILogonEx(0, NULL, NULL,
-		MAPI_LOGON_UI | MAPI_NEW_SESSION | MAPI_EXPLICIT_PROFILE,
+	auto hRes = MAPILogonEx(0, NULL, NULL,
+		MAPI_LOGON_UI,
 		&lpMAPISession);
 	if (SUCCEEDED(hRes))
 	{
@@ -41,7 +44,8 @@ void TestMAPI()
 			hRes = OpenFolder(lpMDB, _T("Inbox"), &lpInbox);
 			if (SUCCEEDED(hRes))
 			{
-				MessageBoxW(NULL, L"Got Inbox", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+				auto message = caller + L": got Inbox";
+				MessageBoxW(NULL, message.c_str(), L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 			}
 
 			if (lpInbox) lpInbox->Release();
@@ -83,7 +87,6 @@ STDMETHODIMP CConnect::OnConnection(
 
 	m_pApplication->ActiveExplorer(&m_pExplorer);
 	ExplorerEventSink::DispEventAdvise(m_pExplorer, &__uuidof(Outlook::ExplorerEvents));
-
 
 	return S_OK;
 }
@@ -287,6 +290,7 @@ void CConnect::OnClose()
 void CConnect::FolderSwitch()
 {
 	//MessageBoxW(NULL, L"FolderSwitch", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+	//TestMAPI(L"FolderSwitch");
 }
 
 HRESULT CConnect::HrCreateSampleTaskPane()
