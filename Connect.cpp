@@ -8,6 +8,7 @@
 #include "connect.h"
 #include "formregionwrapper.h"
 #include "MAPIx.h"
+#include "MAPIAux.h"
 #include "MAPI\Defaults.h"
 #include <string>
 
@@ -27,7 +28,7 @@ CConnect::CConnect()
 	m_bMAPIInitialized = false;
 }
 
-void TestMAPI(wstring caller)
+void TestMAPI(wstring caller, bool bOnline)
 {
 	LPMAPISESSION lpMAPISession = NULL;
 
@@ -37,14 +38,14 @@ void TestMAPI(wstring caller)
 	if (SUCCEEDED(hRes))
 	{
 		LPMDB lpMDB = NULL;
-		hRes = OpenDefaultMessageStore(lpMAPISession, NULL, &lpMDB);
+		hRes = OpenDefaultMessageStore(lpMAPISession, bOnline ? MDB_ONLINE : NULL, &lpMDB);
 		if (SUCCEEDED(hRes))
 		{
 			LPMAPIFOLDER lpInbox = NULL;
-			hRes = OpenFolder(lpMDB, _T("Inbox"), &lpInbox);
+			hRes = OpenInbox(lpMDB, bOnline ? MAPI_NO_CACHE : NULL, &lpInbox);
 			if (SUCCEEDED(hRes))
 			{
-				auto message = caller + L": got Inbox";
+				auto message = caller + L": got Inbox " + (bOnline ? L"online" : L"cached");
 				MessageBoxW(NULL, message.c_str(), L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 			}
 
@@ -290,7 +291,7 @@ void CConnect::OnClose()
 void CConnect::FolderSwitch()
 {
 	//MessageBoxW(NULL, L"FolderSwitch", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
-	//TestMAPI(L"FolderSwitch");
+	//TestMAPI(L"FolderSwitch", true);
 }
 
 HRESULT CConnect::HrCreateSampleTaskPane()
