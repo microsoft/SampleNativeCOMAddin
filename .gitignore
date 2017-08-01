@@ -34,3 +34,4 @@
 /.vs
 /Debug
 /Release
+/SampleNativeCOMAddin.vcxproj.user
