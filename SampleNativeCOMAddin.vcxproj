@@ -46,6 +46,7 @@
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(Configuration)\</OutDir>
@@ -67,7 +68,6 @@
       <DllDataFileName />
       <InterfaceIdentifierFileName />
       <ProxyFileName />
-      <ValidateAllParameters>false</ValidateAllParameters>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -109,7 +109,6 @@
       <DllDataFileName />
       <InterfaceIdentifierFileName />
       <ProxyFileName />
-      <ValidateAllParameters>false</ValidateAllParameters>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
