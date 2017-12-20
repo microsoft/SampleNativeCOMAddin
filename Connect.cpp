@@ -22,6 +22,7 @@ _ATL_FUNC_INFO CConnect::OptionsPagesAddInfo = { CC_STDCALL, VT_EMPTY, 1, {VT_DI
 _ATL_FUNC_INFO CConnect::MapiLogonCompleteInfo = { CC_STDCALL, VT_EMPTY, 0 };
 _ATL_FUNC_INFO CConnect::FolderSwitchInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 _ATL_FUNC_INFO CConnect::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
+_ATL_FUNC_INFO CConnect::ItemSendInfo = { CC_STDCALL, VT_EMPTY, 2,{ VT_DISPATCH, VT_BOOL | VT_BYREF } };
 
 CConnect::CConnect()
 {
@@ -280,6 +281,12 @@ HRESULT CConnect::OptionsPagesAdd(IDispatch *pages)
 HRESULT CConnect::MapiLogonComplete()
 {
 	//MessageBoxW(NULL, L"MapiLogonComplete", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+	return S_OK;
+}
+
+HRESULT CConnect::ItemSend()
+{
+	//MessageBoxW(NULL, L"ItemSend", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 	return S_OK;
 }
 

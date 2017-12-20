@@ -34,3 +34,4 @@ const DISPID dispidEventOptionsPagesAdd = 0xF005;
 const DISPID dispidEventMapiLogonComplete = 0xFA90;
 const DISPID dispidEventFolderSwitch = 0xF002;
 const DISPID dispidEventClose = 0xF008;
+const DISPID dispidEventItemSend = 0xF002;

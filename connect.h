@@ -68,10 +68,12 @@ public:
 	static _ATL_FUNC_INFO MapiLogonCompleteInfo;
 	static _ATL_FUNC_INFO FolderSwitchInfo;
 	static _ATL_FUNC_INFO OnCloseInfo;
+	static _ATL_FUNC_INFO ItemSendInfo;
 
 	BEGIN_SINK_MAP(CConnect)
 		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventOptionsPagesAdd, OptionsPagesAdd, &OptionsPagesAddInfo)
 		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventMapiLogonComplete, MapiLogonComplete, &MapiLogonCompleteInfo)
+		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventItemSend, ItemSend, &ItemSendInfo)
 		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventFolderSwitch, FolderSwitch, &FolderSwitchInfo)
 		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventClose, OnClose, &OnCloseInfo)
 	END_SINK_MAP()
@@ -107,6 +109,7 @@ public:
 	// ApplicationEvents Methods
 	STDMETHOD(OptionsPagesAdd)(IDispatch* propertyPages);
 	STDMETHOD(MapiLogonComplete)();
+	STDMETHOD(ItemSend)();
 
 	// ExplorerEvents Methods
 	void __stdcall OnClose();
