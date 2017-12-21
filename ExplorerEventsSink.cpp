@@ -1,4 +1,5 @@
 #include "ExplorerEventsSink.h"
+#include "TestMAPI.h"
 
 _ATL_FUNC_INFO ExplorerEventsSink::FolderSwitchInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 _ATL_FUNC_INFO ExplorerEventsSink::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
@@ -22,5 +23,5 @@ void ExplorerEventsSink::OnClose()
 void ExplorerEventsSink::FolderSwitch()
 {
 	//MessageBoxW(NULL, L"FolderSwitch", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
-	//TestMAPI(L"FolderSwitch", true);
+	//TestMAPI::TestInbox(L"FolderSwitch", true);
 }
