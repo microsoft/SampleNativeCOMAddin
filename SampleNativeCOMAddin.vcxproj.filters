@@ -16,6 +16,7 @@
       <Filter>MAPI</Filter>
     </ClCompile>
     <ClCompile Include="ApplicationEventsSink.cpp" />
+    <ClCompile Include="ExplorerEventsSink.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connect.h" />
@@ -29,6 +30,7 @@
       <Filter>MAPI</Filter>
     </ClInclude>
     <ClInclude Include="ApplicationEventsSink.h" />
+    <ClInclude Include="ExplorerEventsSink.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AddIn.rc" />

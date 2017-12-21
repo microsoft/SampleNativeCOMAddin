@@ -4,6 +4,7 @@
 #pragma once
 #include "stdafx.h"
 #include "ApplicationEventsSink.h"
+#include "ExplorerEventsSink.h"
 
 class CConnect;
 
@@ -12,7 +13,6 @@ typedef IDispatchImpl<_FormRegionStartup, &__uuidof(_FormRegionStartup), &__uuid
 typedef IDispatchImpl<ICustomTaskPaneConsumer, &__uuidof(ICustomTaskPaneConsumer), &__uuidof(__Office), -1, -1> ICustomTaskPaneConsumerImpl;
 typedef IDispatchImpl<IRibbonExtensibility, &__uuidof(IRibbonExtensibility), &__uuidof(__Office), -1, -1> IRibbonExtensibilityImpl;
 typedef IDispatchImpl<IRibbonCallback, &__uuidof(IRibbonCallback), &__uuidof(__SampleNativeCOMAddinLib), -1, -1> IRibbonCallbackImpl;
-typedef IDispEventSimpleImpl<2, CConnect, &__uuidof(ExplorerEvents_10)> ExplorerEventSink;
 
 class ATL_NO_VTABLE CConnect :
 	public CComObjectRootEx<CComSingleThreadModel>,
@@ -21,8 +21,7 @@ class ATL_NO_VTABLE CConnect :
 	public FormRegionStartupImpl,
 	public ICustomTaskPaneConsumerImpl,
 	public IRibbonExtensibilityImpl,
-	public IRibbonCallbackImpl,
-	public ExplorerEventSink
+	public IRibbonCallbackImpl
 {
 public:
 	CConnect();
@@ -63,14 +62,6 @@ public:
 		COM_INTERFACE_ENTRY(IRibbonCallback)
 	END_COM_MAP()
 
-	static _ATL_FUNC_INFO FolderSwitchInfo;
-	static _ATL_FUNC_INFO OnCloseInfo;
-
-	BEGIN_SINK_MAP(CConnect)
-		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventFolderSwitch, FolderSwitch, &FolderSwitchInfo)
-		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventClose, OnClose, &OnCloseInfo)
-	END_SINK_MAP()
-
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
 	HRESULT FinalConstruct() { return S_OK; }
@@ -99,10 +90,6 @@ public:
 	// IRibbonCallback Methods
 	STDMETHOD(Button1Clicked)(IDispatch* ribbonControl);
 
-	// ExplorerEvents Methods
-	void __stdcall OnClose();
-	void __stdcall FolderSwitch();
-
 private:
 	STDMETHOD(HrCreateSampleTaskPane)(void);
 
@@ -111,6 +98,7 @@ private:
 	CComPtr<ICTPFactory> m_pCTPFactory;
 	bool m_bMAPIInitialized;
 	ApplicationEventsSink* m_ApplicationEventSink;
+	ExplorerEventsSink * m_ExplorerEventsSink;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Connect), CConnect)

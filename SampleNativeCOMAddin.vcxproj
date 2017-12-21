@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="ApplicationEventsSink.cpp" />
     <ClCompile Include="Connect.cpp" />
+    <ClCompile Include="ExplorerEventsSink.cpp" />
     <ClCompile Include="FormRegionWrapper.cpp" />
     <ClCompile Include="MAPI\Defaults.cpp" />
     <ClCompile Include="MAPI\MapiStubLibrary.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="ApplicationEventsSink.h" />
     <ClInclude Include="connect.h" />
+    <ClInclude Include="ExplorerEventsSink.h" />
     <ClInclude Include="FormRegionWrapper.h" />
     <ClInclude Include="ids.h" />
     <ClInclude Include="MAPI\Defaults.h" />

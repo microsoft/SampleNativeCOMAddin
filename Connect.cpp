@@ -18,9 +18,6 @@ using std::wstring;
 	CConnect implementation
 -----------------------------------------------------------------------!*/
 
-_ATL_FUNC_INFO CConnect::FolderSwitchInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
-_ATL_FUNC_INFO CConnect::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
-
 CConnect::CConnect()
 {
 	m_bMAPIInitialized = false;
@@ -85,18 +82,18 @@ STDMETHODIMP CConnect::OnConnection(
 	m_ApplicationEventSink = new ApplicationEventsSink(m_pApplication);
 
 	m_pApplication->ActiveExplorer(&m_pExplorer);
-	ExplorerEventSink::DispEventAdvise(m_pExplorer, &__uuidof(Outlook::ExplorerEvents));
+	m_ExplorerEventsSink = new ExplorerEventsSink(m_pExplorer);
 
 	return S_OK;
 }
 
 STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEARRAY ** /*custom*/)
 {
+	if (m_ExplorerEventsSink) delete m_ExplorerEventsSink;
 	if (m_ApplicationEventSink) delete m_ApplicationEventSink;
 
 	if (m_pExplorer)
 	{
-		ExplorerEventSink::DispEventUnadvise(m_pExplorer);
 		m_pExplorer.Release();
 	}
 
@@ -159,11 +156,6 @@ STDMETHODIMP CConnect::Invoke(
 
 	if (DISP_E_MEMBERNOTFOUND == hr)
 		hr = IDTExtensibilityImpl::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
-
-	if (DISP_E_MEMBERNOTFOUND == hr)
-	{
-		hr = ExplorerEventSink::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
-	}
 
 	// There is no use trying to call Invoke on IRibbonExtensiblilityImpl and
 	// ICustomTaskPaneConsumerImpl because they only contain one method with
@@ -258,17 +250,6 @@ HRESULT CConnect::Button1Clicked(IDispatch* /* ribbonControl */)
 		MB_OK | MB_ICONINFORMATION);
 
 	return HrCreateSampleTaskPane();
-}
-
-void CConnect::OnClose()
-{
-	//MessageBoxW(NULL, L"OnClose", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
-}
-
-void CConnect::FolderSwitch()
-{
-	//MessageBoxW(NULL, L"FolderSwitch", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
-	//TestMAPI(L"FolderSwitch", true);
 }
 
 HRESULT CConnect::HrCreateSampleTaskPane()
