@@ -1,4 +1,6 @@
 #include "ApplicationEventsSink.h"
+#include "MAPIx.h"
+#include "MAPI\TestMAPI.h"
 
 _ATL_FUNC_INFO ApplicationEventsSink::OptionsPagesAddInfo = { CC_STDCALL, VT_EMPTY, 1,{ VT_DISPATCH } };
 _ATL_FUNC_INFO ApplicationEventsSink::MapiLogonCompleteInfo = { CC_STDCALL, VT_EMPTY, 0 };
@@ -37,5 +39,22 @@ HRESULT ApplicationEventsSink::MapiLogonComplete()
 HRESULT ApplicationEventsSink::ItemSend(IDispatch* /*Item*/, VARIANT_BOOL* /*Cancel*/)
 {
 	//MessageBoxW(NULL, L"ItemSend", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+	//Outlook::_MailItemPtr oom_item = Item;
+	//LPUNKNOWN mapi_object = nullptr;
+	//oom_item->get_MAPIOBJECT(&mapi_object);
+	//if (mapi_object != nullptr)
+	//{
+	//	LPMAPIPROP mapi_item = nullptr;
+	//	mapi_object->QueryInterface(IID_IMAPIProp, (LPVOID*)&mapi_item);
+	//	if (mapi_item != nullptr)
+	//	{
+	//		TestMAPI::TestSecureMessage(mapi_item);
+
+	//		mapi_item->Release();
+	//	}
+
+	//	mapi_object->Release();
+	//}
+
 	return S_OK;
 }

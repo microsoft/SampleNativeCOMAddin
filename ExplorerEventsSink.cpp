@@ -1,5 +1,5 @@
 #include "ExplorerEventsSink.h"
-#include "TestMAPI.h"
+#include "MAPI\TestMAPI.h"
 
 _ATL_FUNC_INFO ExplorerEventsSink::FolderSwitchInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 _ATL_FUNC_INFO ExplorerEventsSink::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };

@@ -17,7 +17,9 @@
     </ClCompile>
     <ClCompile Include="ApplicationEventsSink.cpp" />
     <ClCompile Include="ExplorerEventsSink.cpp" />
-    <ClCompile Include="TestMAPI.cpp" />
+    <ClCompile Include="MAPI\TestMAPI.cpp">
+      <Filter>MAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connect.h" />
@@ -32,7 +34,9 @@
     </ClInclude>
     <ClInclude Include="ApplicationEventsSink.h" />
     <ClInclude Include="ExplorerEventsSink.h" />
-    <ClInclude Include="TestMAPI.h" />
+    <ClInclude Include="MAPI\TestMAPI.h">
+      <Filter>MAPI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AddIn.rc" />

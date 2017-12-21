@@ -150,7 +150,7 @@
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="resource.cpp" />
     <ClCompile Include="SampleControl.cpp" />
-    <ClCompile Include="TestMAPI.cpp" />
+    <ClCompile Include="MAPI\TestMAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AddIn.def" />
@@ -169,7 +169,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SampleControl.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="TestMAPI.h" />
+    <ClInclude Include="MAPI\TestMAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AddIn.rc" />

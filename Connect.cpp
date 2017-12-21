@@ -8,7 +8,7 @@
 #include "connect.h"
 #include "formregionwrapper.h"
 #include "MAPIx.h"
-#include "TestMAPI.h"
+#include "MAPI\TestMAPI.h"
 
 /*!-----------------------------------------------------------------------
 	CConnect implementation
