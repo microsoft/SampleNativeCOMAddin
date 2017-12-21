@@ -15,6 +15,7 @@
     <ClCompile Include="MAPI\Defaults.cpp">
       <Filter>MAPI</Filter>
     </ClCompile>
+    <ClCompile Include="ApplicationEventsSink.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connect.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="MAPI\Defaults.h">
       <Filter>MAPI</Filter>
     </ClInclude>
+    <ClInclude Include="ApplicationEventsSink.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AddIn.rc" />

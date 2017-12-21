@@ -18,11 +18,8 @@ using std::wstring;
 	CConnect implementation
 -----------------------------------------------------------------------!*/
 
-_ATL_FUNC_INFO CConnect::OptionsPagesAddInfo = { CC_STDCALL, VT_EMPTY, 1, {VT_DISPATCH} };
-_ATL_FUNC_INFO CConnect::MapiLogonCompleteInfo = { CC_STDCALL, VT_EMPTY, 0 };
 _ATL_FUNC_INFO CConnect::FolderSwitchInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 _ATL_FUNC_INFO CConnect::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
-_ATL_FUNC_INFO CConnect::ItemSendInfo = { CC_STDCALL, VT_EMPTY, 2,{ VT_DISPATCH, VT_BOOL | VT_BYREF } };
 
 CConnect::CConnect()
 {
@@ -85,7 +82,7 @@ STDMETHODIMP CConnect::OnConnection(
 
 	//MessageBoxW(NULL, L"OnConnection fired", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 
-	ApplicationEventSink::DispEventAdvise(m_pApplication);
+	m_ApplicationEventSink = new ApplicationEventsSink(m_pApplication);
 
 	m_pApplication->ActiveExplorer(&m_pExplorer);
 	ExplorerEventSink::DispEventAdvise(m_pExplorer, &__uuidof(Outlook::ExplorerEvents));
@@ -95,6 +92,7 @@ STDMETHODIMP CConnect::OnConnection(
 
 STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEARRAY ** /*custom*/)
 {
+	if (m_ApplicationEventSink) delete m_ApplicationEventSink;
 
 	if (m_pExplorer)
 	{
@@ -104,7 +102,6 @@ STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEAR
 
 	if (m_pApplication)
 	{
-		ApplicationEventSink::DispEventUnadvise(m_pApplication);
 		m_pApplication.Release();
 	}
 
@@ -165,8 +162,6 @@ STDMETHODIMP CConnect::Invoke(
 
 	if (DISP_E_MEMBERNOTFOUND == hr)
 	{
-		// TODO: Figure out how to tell which one to invoke.
-		hr = ApplicationEventSink::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
 		hr = ExplorerEventSink::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
 	}
 
@@ -263,31 +258,6 @@ HRESULT CConnect::Button1Clicked(IDispatch* /* ribbonControl */)
 		MB_OK | MB_ICONINFORMATION);
 
 	return HrCreateSampleTaskPane();
-}
-
-HRESULT CConnect::OptionsPagesAdd(IDispatch *pages)
-{
-	if (!pages)
-		return E_POINTER;
-
-	PropertyPagesPtr spPages(pages);
-
-	if (!spPages)
-		return E_UNEXPECTED;
-
-	return spPages->Add(variant_t(SAMPLECONTROL_PROGID), bstr_t("Sample Options"));
-}
-
-HRESULT CConnect::MapiLogonComplete()
-{
-	//MessageBoxW(NULL, L"MapiLogonComplete", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
-	return S_OK;
-}
-
-HRESULT CConnect::ItemSend()
-{
-	//MessageBoxW(NULL, L"ItemSend", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
-	return S_OK;
 }
 
 void CConnect::OnClose()

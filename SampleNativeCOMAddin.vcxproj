@@ -140,6 +140,7 @@
     <Midl Include="AddIn.idl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ApplicationEventsSink.cpp" />
     <ClCompile Include="Connect.cpp" />
     <ClCompile Include="FormRegionWrapper.cpp" />
     <ClCompile Include="MAPI\Defaults.cpp" />
@@ -156,6 +157,7 @@
     <None Include="SampleControl.rgs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApplicationEventsSink.h" />
     <ClInclude Include="connect.h" />
     <ClInclude Include="FormRegionWrapper.h" />
     <ClInclude Include="ids.h" />

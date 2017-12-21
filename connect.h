@@ -3,6 +3,7 @@
 -----------------------------------------------------------------------!*/
 #pragma once
 #include "stdafx.h"
+#include "ApplicationEventsSink.h"
 
 class CConnect;
 
@@ -11,7 +12,6 @@ typedef IDispatchImpl<_FormRegionStartup, &__uuidof(_FormRegionStartup), &__uuid
 typedef IDispatchImpl<ICustomTaskPaneConsumer, &__uuidof(ICustomTaskPaneConsumer), &__uuidof(__Office), -1, -1> ICustomTaskPaneConsumerImpl;
 typedef IDispatchImpl<IRibbonExtensibility, &__uuidof(IRibbonExtensibility), &__uuidof(__Office), -1, -1> IRibbonExtensibilityImpl;
 typedef IDispatchImpl<IRibbonCallback, &__uuidof(IRibbonCallback), &__uuidof(__SampleNativeCOMAddinLib), -1, -1> IRibbonCallbackImpl;
-typedef IDispEventSimpleImpl<1, CConnect, &__uuidof(ApplicationEvents_11)> ApplicationEventSink;
 typedef IDispEventSimpleImpl<2, CConnect, &__uuidof(ExplorerEvents_10)> ExplorerEventSink;
 
 class ATL_NO_VTABLE CConnect :
@@ -22,7 +22,6 @@ class ATL_NO_VTABLE CConnect :
 	public ICustomTaskPaneConsumerImpl,
 	public IRibbonExtensibilityImpl,
 	public IRibbonCallbackImpl,
-	public ApplicationEventSink,
 	public ExplorerEventSink
 {
 public:
@@ -64,16 +63,10 @@ public:
 		COM_INTERFACE_ENTRY(IRibbonCallback)
 	END_COM_MAP()
 
-	static _ATL_FUNC_INFO OptionsPagesAddInfo;
-	static _ATL_FUNC_INFO MapiLogonCompleteInfo;
 	static _ATL_FUNC_INFO FolderSwitchInfo;
 	static _ATL_FUNC_INFO OnCloseInfo;
-	static _ATL_FUNC_INFO ItemSendInfo;
 
 	BEGIN_SINK_MAP(CConnect)
-		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventOptionsPagesAdd, OptionsPagesAdd, &OptionsPagesAddInfo)
-		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventMapiLogonComplete, MapiLogonComplete, &MapiLogonCompleteInfo)
-		SINK_ENTRY_INFO(1, __uuidof(ApplicationEvents_11), dispidEventItemSend, ItemSend, &ItemSendInfo)
 		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventFolderSwitch, FolderSwitch, &FolderSwitchInfo)
 		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventClose, OnClose, &OnCloseInfo)
 	END_SINK_MAP()
@@ -106,11 +99,6 @@ public:
 	// IRibbonCallback Methods
 	STDMETHOD(Button1Clicked)(IDispatch* ribbonControl);
 
-	// ApplicationEvents Methods
-	STDMETHOD(OptionsPagesAdd)(IDispatch* propertyPages);
-	STDMETHOD(MapiLogonComplete)();
-	STDMETHOD(ItemSend)();
-
 	// ExplorerEvents Methods
 	void __stdcall OnClose();
 	void __stdcall FolderSwitch();
@@ -122,6 +110,7 @@ private:
 	_ApplicationPtr m_pApplication;
 	CComPtr<ICTPFactory> m_pCTPFactory;
 	bool m_bMAPIInitialized;
+	ApplicationEventsSink* m_ApplicationEventSink;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Connect), CConnect)
