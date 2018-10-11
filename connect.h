@@ -89,7 +89,7 @@ public:
 	STDMETHOD(Button1Clicked)(IDispatch* ribbonControl);
 
 private:
-	STDMETHOD(HrCreateSampleTaskPane)(void);
+	STDMETHOD(HrCreateSampleTaskPane)();
 
 	_ExplorerPtr m_pExplorer = nullptr;
 	_ApplicationPtr m_pApplication = nullptr;
