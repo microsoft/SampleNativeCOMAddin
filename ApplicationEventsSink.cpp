@@ -1,20 +1,21 @@
 #include "ApplicationEventsSink.h"
-#include "MAPIx.h"
-#include "MAPI\TestMAPI.h"
+#include "MAPIX.h"
+#include "MAPI/TestMAPI.h"
 
 _ATL_FUNC_INFO ApplicationEventsSink::OptionsPagesAddInfo = { CC_STDCALL, VT_EMPTY, 1,{ VT_DISPATCH } };
 _ATL_FUNC_INFO ApplicationEventsSink::MapiLogonCompleteInfo = { CC_STDCALL, VT_EMPTY, 0 };
 _ATL_FUNC_INFO ApplicationEventsSink::ItemSendInfo = { CC_STDCALL, VT_EMPTY, 2,{ VT_DISPATCH, VT_BOOL | VT_BYREF } };
+_ATL_FUNC_INFO ApplicationEventsSink::ItemLoadInfo = { CC_STDCALL, VT_EMPTY, 1,{ VT_DISPATCH} };
 
-ApplicationEventsSink::ApplicationEventsSink(Outlook::_ApplicationPtr piApp)
+ApplicationEventsSink::ApplicationEventsSink(_ApplicationPtr piApp)
 {
 	m_piApp = piApp;
-	DispEventAdvise((IUnknown*)m_piApp);
+	DispEventAdvise(static_cast<IUnknown*>(m_piApp));
 }
 
 ApplicationEventsSink::~ApplicationEventsSink()
 {
-	DispEventUnadvise((IUnknown*)m_piApp);
+	DispEventUnadvise(static_cast<IUnknown*>(m_piApp));
 }
 
 HRESULT ApplicationEventsSink::OptionsPagesAdd(IDispatch *pages)
@@ -56,5 +57,10 @@ HRESULT ApplicationEventsSink::ItemSend(IDispatch* /*Item*/, VARIANT_BOOL* /*Can
 	//	mapi_object->Release();
 	//}
 
+	return S_OK;
+}
+
+HRESULT ApplicationEventsSink::ItemLoad(IDispatch* /*Item*/)
+{
 	return S_OK;
 }
