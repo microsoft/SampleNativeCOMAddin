@@ -13,7 +13,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 }
 
 // Used to determine whether the DLL can be unloaded by OLE
-STDAPI DllCanUnloadNow(void)
+STDAPI DllCanUnloadNow()
 {
 	return _AtlModule.DllCanUnloadNow();
 }
@@ -25,14 +25,14 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 }
 
 // DllRegisterServer - Adds entries to the system registry
-STDAPI DllRegisterServer(void)
+STDAPI DllRegisterServer()
 {
 	// registers object, typelib and all interfaces in typelib
 	return _AtlModule.DllRegisterServer();
 }
 
 // DllUnregisterServer - Removes entries from the system registry
-STDAPI DllUnregisterServer(void)
+STDAPI DllUnregisterServer()
 {
 	return _AtlModule.DllUnregisterServer();
 }

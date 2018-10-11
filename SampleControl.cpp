@@ -22,7 +22,7 @@ LRESULT CSampleControl::OnBnClickedButton1(WORD /*wNotifyCode*/, WORD /*wID*/, H
 		}
 	}
 
-	::MessageBoxW(NULL,
+	::MessageBoxW(nullptr,
 		L"You clicked button1 on our SampleControl!",
 		L"Message from sample control",
 		MB_OK | MB_ICONINFORMATION);

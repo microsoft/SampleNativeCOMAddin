@@ -46,21 +46,21 @@ public:
 
 		static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
 	{
-		ATL::_ATL_REGMAP_ENTRY regMapEntries[] =
+		_ATL_REGMAP_ENTRY regMapEntries[] =
 		{
-			{ OLESTR("OLEMISC"), NULL },
+			{ OLESTR("OLEMISC"), nullptr },
 			{ OLESTR("PROGID"), SAMPLECONTROL_PROGID },
 			{ OLESTR("CLSID"), SAMPLECONTROL_CLSID_STR },
 			{ OLESTR("TYPELIB"), TYPELIB_GUID_STR },
-			{ NULL, NULL }
+			{ nullptr, nullptr }
 		};
 
 		TCHAR szOleMisc[32];
-		ATL::Checked::itot_s(_GetMiscStatus(), szOleMisc, _countof(szOleMisc), 10);
+		Checked::itot_s(_GetMiscStatus(), szOleMisc, _countof(szOleMisc), 10);
 		USES_CONVERSION_EX;
 		regMapEntries[0].szData = T2OLE_EX(szOleMisc, _ATL_SAFE_ALLOCA_DEF_THRESHOLD);
 
-		return ATL::_pAtlModule->UpdateRegistryFromResource(IDR_SAMPLECONTROL, bRegister, regMapEntries);
+		return _pAtlModule->UpdateRegistryFromResource(IDR_SAMPLECONTROL, bRegister, regMapEntries);
 	}
 
 
@@ -120,7 +120,7 @@ public:
 			&__uuidof(ISampleControl),
 		};
 
-		for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+		for (auto i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
 		{
 			if (InlineIsEqualGUID(*arr[i], riid))
 				return S_OK;

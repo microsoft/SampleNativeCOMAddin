@@ -35,12 +35,12 @@ public:
 		SINK_ENTRY_INFO(2, __uuidof(FormRegionEvents), dispidEventOnClose, OnFormRegionClose, &VoidFuncInfo)
 	END_SINK_MAP()
 
-	void __stdcall OnButton1Click();
+	void __stdcall OnButton1Click() const;
 	void __stdcall OnFormRegionClose();
 
 private:
-	_FormRegionPtr m_spFormRegion;
-	_OlkCommandButtonPtr m_spOlkCmdBtn;
-	_MailItemPtr m_spMailItem;
+	_FormRegionPtr m_spFormRegion = nullptr;
+	_OlkCommandButtonPtr m_spOlkCmdBtn = nullptr;
+	_MailItemPtr m_spMailItem = nullptr;
 };
 

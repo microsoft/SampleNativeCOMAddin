@@ -19,7 +19,7 @@ _ATL_FUNC_INFO FormRegionWrapper::VoidFuncInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 
 	// The FormRegionWrapper object is created here and
 	// deleted in the FormRegionClose event
-	FormRegionWrapper* pWrapper = new (std::nothrow) FormRegionWrapper();
+	auto pWrapper = new (std::nothrow) FormRegionWrapper();
 
 	if (!pWrapper)
 		return E_OUTOFMEMORY;
@@ -29,7 +29,7 @@ _ATL_FUNC_INFO FormRegionWrapper::VoidFuncInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 
 HRESULT FormRegionWrapper::HrInit(_FormRegion* pFormRegion)
 {
-	HRESULT hr = S_OK;
+	auto hr = S_OK;
 
 	if (!pFormRegion)
 		return E_POINTER;
@@ -67,12 +67,12 @@ HRESULT FormRegionWrapper::HrInit(_FormRegion* pFormRegion)
 	return hr;
 }
 
-void FormRegionWrapper::OnButton1Click()
+void FormRegionWrapper::OnButton1Click() const
 {
 	// When the button on the form region is clicked send the item
 	if (m_spMailItem)
 	{
-		MessageBoxW(NULL,
+		MessageBoxW(nullptr,
 			L"Going to send the message now!",
 			L"Message from the sample native form region",
 			MB_OK | MB_ICONINFORMATION);

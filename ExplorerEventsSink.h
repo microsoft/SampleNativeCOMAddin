@@ -25,5 +25,5 @@ public:
 	void __stdcall FolderSwitch();
 
 private:
-	Outlook::_ExplorerPtr m_piExplorer;
+	_ExplorerPtr m_piExplorer = nullptr;
 };

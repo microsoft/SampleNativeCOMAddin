@@ -14,17 +14,17 @@ HRESULT HrGetResource(int nId, LPCTSTR lpType, LPVOID* ppvResourceData, DWORD* p
 	if (!lpType || !ppvResourceData || !pdwSizeInBytes)
 		return E_POINTER;
 
-	HMODULE hModule = _AtlBaseModule.GetModuleInstance();
+	const auto hModule = _AtlBaseModule.GetModuleInstance();
 
 	if (!hModule)
 		return E_UNEXPECTED;
 
-	HRSRC hRsrc = FindResource(hModule, MAKEINTRESOURCE(nId), lpType);
+	const auto hRsrc = FindResource(hModule, MAKEINTRESOURCE(nId), lpType);
 
 	if (!hRsrc)
 		return HRESULT_FROM_WIN32(GetLastError());
 
-	HGLOBAL hGlobal = LoadResource(hModule, hRsrc);
+	const auto hGlobal = LoadResource(hModule, hRsrc);
 
 	if (!hGlobal)
 		return HRESULT_FROM_WIN32(GetLastError());
@@ -37,11 +37,11 @@ HRESULT HrGetResource(int nId, LPCTSTR lpType, LPVOID* ppvResourceData, DWORD* p
 
 BSTR GetXMLResource(int nId)
 {
-	LPVOID pResourceData = NULL;
+	LPVOID pResourceData = nullptr;
 	DWORD dwSizeInBytes = 0;
 
 	if (FAILED(HrGetResource(nId, TEXT("XML"), &pResourceData, &dwSizeInBytes)))
-		return NULL;
+		return nullptr;
 
 	// Assumes that the data is not stored in Unicode.
 	CComBSTR cbstr(dwSizeInBytes, reinterpret_cast<LPCSTR>(pResourceData));
@@ -51,26 +51,26 @@ BSTR GetXMLResource(int nId)
 
 SAFEARRAY* GetOFSResource(int nId)
 {
-	LPVOID pResourceData = NULL;
+	LPVOID pResourceData = nullptr;
 	DWORD dwSizeInBytes = 0;
 
 	if (FAILED(HrGetResource(nId, TEXT("OFS"), &pResourceData, &dwSizeInBytes)))
-		return NULL;
+		return nullptr;
 
-	SAFEARRAY* psa = NULL;
+	SAFEARRAY* psa = nullptr;
 	SAFEARRAYBOUND dim = { dwSizeInBytes, 0 };
 
 	psa = SafeArrayCreate(VT_UI1, 1, &dim);
 
 	if (!psa)
-		return NULL;
+		return nullptr;
 
-	BYTE* pSafeArrayData = NULL;
+	BYTE* pSafeArrayData = nullptr;
 
-	if (FAILED(SafeArrayAccessData(psa, (void**)&pSafeArrayData)))
+	if (FAILED(SafeArrayAccessData(psa, reinterpret_cast<void**>(&pSafeArrayData))))
 	{
 		SafeArrayDestroy(psa);
-		return NULL;
+		return nullptr;
 	}
 
 	memcpy(pSafeArrayData, pResourceData, dwSizeInBytes);
@@ -78,7 +78,7 @@ SAFEARRAY* GetOFSResource(int nId)
 	if (FAILED(SafeArrayUnaccessData(psa)))
 	{
 		SafeArrayDestroy(psa);
-		return NULL;
+		return nullptr;
 	}
 
 	return psa;

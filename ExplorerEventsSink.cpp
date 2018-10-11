@@ -1,5 +1,5 @@
 #include "ExplorerEventsSink.h"
-#include "MAPI\TestMAPI.h"
+#include "MAPI/TestMAPI.h"
 
 _ATL_FUNC_INFO ExplorerEventsSink::FolderSwitchInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 _ATL_FUNC_INFO ExplorerEventsSink::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
@@ -7,12 +7,12 @@ _ATL_FUNC_INFO ExplorerEventsSink::OnCloseInfo = { CC_STDCALL, VT_EMPTY, 0, 0 };
 ExplorerEventsSink::ExplorerEventsSink(_ExplorerPtr piExplorer)
 {
 	m_piExplorer = piExplorer;
-	DispEventAdvise(m_piExplorer, &__uuidof(Outlook::ExplorerEvents));
+	DispEventAdvise(m_piExplorer, &__uuidof(ExplorerEvents));
 }
 
 ExplorerEventsSink::~ExplorerEventsSink()
 {
-	DispEventUnadvise((IUnknown*)m_piExplorer);
+	DispEventUnadvise(static_cast<IUnknown*>(m_piExplorer));
 }
 
 void ExplorerEventsSink::OnClose()
