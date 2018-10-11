@@ -6,18 +6,13 @@
 	and FormRegionStartup.
 -----------------------------------------------------------------------!*/
 #include "connect.h"
-#include "formregionwrapper.h"
-#include "MAPIx.h"
-#include "MAPI\TestMAPI.h"
+#include "FormRegionWrapper.h"
+#include "MAPIX.h"
+#include "MAPI/TestMAPI.h"
 
 /*!-----------------------------------------------------------------------
 	CConnect implementation
 -----------------------------------------------------------------------!*/
-
-CConnect::CConnect()
-{
-	m_bMAPIInitialized = false;
-}
 
 STDMETHODIMP CConnect::OnConnection(
 	IDispatch *pApplication,
@@ -30,7 +25,7 @@ STDMETHODIMP CConnect::OnConnection(
 
 	if (!m_bMAPIInitialized)
 	{
-		HRESULT hRes = MAPIInitialize(NULL);
+		const auto hRes = MAPIInitialize(nullptr);
 		if (SUCCEEDED(hRes))
 		{
 			m_bMAPIInitialized = true;
@@ -52,8 +47,8 @@ STDMETHODIMP CConnect::OnConnection(
 
 STDMETHODIMP CConnect::OnDisconnection(ext_DisconnectMode /*RemoveMode*/, SAFEARRAY ** /*custom*/)
 {
-	if (m_ExplorerEventsSink) delete m_ExplorerEventsSink;
-	if (m_ApplicationEventSink) delete m_ApplicationEventSink;
+	delete m_ExplorerEventsSink;
+	delete m_ApplicationEventSink;
 
 	if (m_pExplorer)
 	{
@@ -99,8 +94,6 @@ STDMETHODIMP CConnect::Invoke(
 	EXCEPINFO *pexceptinfo,
 	UINT *puArgErr)
 {
-	HRESULT hr;
-
 	// Currently the CConnect object can get away with only one implementation
 	// of Invoke because the only interfaces that Outlook calls Invoke on are
 	// the ribbon callbacks and the form region startup. The other interfaces
@@ -112,7 +105,7 @@ STDMETHODIMP CConnect::Invoke(
 
 	// This is assuming the ribbon callback dispids are low and they not
 	// intersect with any of the form region startup dispids
-	hr = IRibbonCallbackImpl::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
+	auto hr = IRibbonCallbackImpl::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
 
 	if (DISP_E_MEMBERNOTFOUND == hr)
 		hr = FormRegionStartupImpl::Invoke(dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexceptinfo, puArgErr);
@@ -137,11 +130,11 @@ STDMETHODIMP CConnect::GetFormRegionStorage(
 	BSTR /* bstrFormRegionName */,
 	IDispatch * /* pDispItem */,
 	long /* LCID */,
-	Outlook::OlFormRegionMode /* formRegionMode */,
-	Outlook::OlFormRegionSize /* formRegionSize */,
+	OlFormRegionMode /* formRegionMode */,
+	OlFormRegionSize /* formRegionSize */,
 	__out VARIANT * pVarStorage)
 {
-	SAFEARRAY* pSafeArray = GetOFSResource(IDS_FORMREGIONSTORAGE);
+	const auto pSafeArray = GetOFSResource(IDS_FORMREGIONSTORAGE);
 
 	if (!pSafeArray)
 		return E_UNEXPECTED;
@@ -161,7 +154,7 @@ STDMETHODIMP CConnect::GetFormRegionManifest(
 	long /* LCID */,
 	__out VARIANT * pvarManifest)
 {
-	BSTR bstr = GetXMLResource(IDS_FORMREGIONMANIFEST);
+	const auto bstr = GetXMLResource(IDS_FORMREGIONMANIFEST);
 
 	if (!bstr)
 		return E_UNEXPECTED;
@@ -174,7 +167,7 @@ STDMETHODIMP CConnect::GetFormRegionManifest(
 STDMETHODIMP CConnect::GetFormRegionIcon(
 	BSTR /* bstrFormRegionName */,
 	long /* LCID */,
-	Outlook::OlFormRegionIcon /* formRegionIcon */,
+	OlFormRegionIcon /* formRegionIcon */,
 	__out VARIANT* /* pvarIcon */)
 {
 	return S_OK;
@@ -207,7 +200,7 @@ HRESULT CConnect::GetCustomUI(BSTR /* ribbonID */, BSTR *ribbonXml)
 
 HRESULT CConnect::Button1Clicked(IDispatch* /* ribbonControl */)
 {
-	MessageBoxW(NULL,
+	MessageBoxW(nullptr,
 		L"Going to create a task pane now!",
 		L"Message from ribbon button.",
 		MB_OK | MB_ICONINFORMATION);
@@ -222,7 +215,7 @@ HRESULT CConnect::HrCreateSampleTaskPane()
 
 	_CustomTaskPanePtr ctp;
 
-	HRESULT hr = m_pCTPFactory->CreateCTP(bstr_t(SAMPLECONTROL_PROGID), bstr_t("Sample Task Pane"), vtMissing, &ctp);
+	const auto hr = m_pCTPFactory->CreateCTP(bstr_t(SAMPLECONTROL_PROGID), bstr_t("Sample Task Pane"), vtMissing, &ctp);
 
 	if (SUCCEEDED(hr))
 		ctp->put_Visible(VARIANT_TRUE);

@@ -24,8 +24,6 @@ class ATL_NO_VTABLE CConnect :
 	public IRibbonCallbackImpl
 {
 public:
-	CConnect();
-
 	// Override IDispatch Invoke
 	STDMETHOD(Invoke)(
 		DISPID dispidMember,
@@ -40,15 +38,15 @@ public:
 	// Setup the registration found in addin.rgs
 	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
 	{
-		ATL::_ATL_REGMAP_ENTRY regMapEntries[] =
+		_ATL_REGMAP_ENTRY regMapEntries[] =
 		{
 			{ OLESTR("PROGID"), ADDIN_PROGID },
 			{ OLESTR("CLSID"), ADDIN_CLSID_STR },
 			{ OLESTR("TYPELIB"), TYPELIB_GUID_STR },
-			{ NULL, NULL }
+			{ nullptr, nullptr}
 		};
 
-		return ATL::_pAtlModule->UpdateRegistryFromResource(IDR_ADDIN, bRegister, regMapEntries);
+		return _pAtlModule->UpdateRegistryFromResource(IDR_ADDIN, bRegister, regMapEntries);
 	}
 
 	DECLARE_NOT_AGGREGATABLE(CConnect)
@@ -93,12 +91,12 @@ public:
 private:
 	STDMETHOD(HrCreateSampleTaskPane)(void);
 
-	_ExplorerPtr m_pExplorer;
-	_ApplicationPtr m_pApplication;
-	CComPtr<ICTPFactory> m_pCTPFactory;
-	bool m_bMAPIInitialized;
-	ApplicationEventsSink* m_ApplicationEventSink;
-	ExplorerEventsSink * m_ExplorerEventsSink;
+	_ExplorerPtr m_pExplorer = nullptr;
+	_ApplicationPtr m_pApplication = nullptr;
+	CComPtr<ICTPFactory> m_pCTPFactory = nullptr;
+	bool m_bMAPIInitialized = false;
+	ApplicationEventsSink* m_ApplicationEventSink = nullptr;
+	ExplorerEventsSink * m_ExplorerEventsSink = nullptr;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Connect), CConnect)
