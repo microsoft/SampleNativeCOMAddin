@@ -16,5 +16,5 @@ MailItemEventsSink::~MailItemEventsSink()
 
 void MailItemEventsSink::Unload()
 {
-	delete this;
+	//delete this;
 }
