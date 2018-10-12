@@ -1,12 +1,9 @@
 #pragma once
 #include "stdafx.h"
-
-class ApplicationEventsSink;
-
-typedef IDispEventSimpleImpl<1, ApplicationEventsSink, &__uuidof(ApplicationEvents_11)> IApplicationEventsSink;
+#include "MailItemEventsSink.h"
 
 class ApplicationEventsSink :
-	public IApplicationEventsSink
+	public IDispEventSimpleImpl<1, ApplicationEventsSink, &__uuidof(ApplicationEvents_11)>
 {
 public:
 	ApplicationEventsSink(_ApplicationPtr piApp);
@@ -29,7 +26,7 @@ public:
 	STDMETHOD(OptionsPagesAdd)(IDispatch* pages);
 	STDMETHOD(MapiLogonComplete)();
 	STDMETHOD(ItemSend)(IDispatch* Item, VARIANT_BOOL* Cancel);
-	STDMETHOD(ItemLoad)(IDispatch* Item);
+	STDMETHOD(ItemLoad)(IDispatch* MailItem);
 
 private:
 	_ApplicationPtr m_piApp = nullptr;

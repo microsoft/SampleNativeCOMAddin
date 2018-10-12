@@ -20,6 +20,7 @@
     <ClCompile Include="MAPI\TestMAPI.cpp">
       <Filter>MAPI</Filter>
     </ClCompile>
+    <ClCompile Include="MailItemEventsSink.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connect.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="MAPI\TestMAPI.h">
       <Filter>MAPI</Filter>
     </ClInclude>
+    <ClInclude Include="MailItemEventsSink.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AddIn.rc" />

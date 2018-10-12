@@ -1,12 +1,8 @@
 #pragma once
 #include "stdafx.h"
 
-class ExplorerEventsSink;
-
-typedef IDispEventSimpleImpl<2, ExplorerEventsSink, &__uuidof(ExplorerEvents_10)> IExplorerEventsSink;
-
 class ExplorerEventsSink:
-	public IExplorerEventsSink
+	public IDispEventSimpleImpl<1, ExplorerEventsSink, &__uuidof(ExplorerEvents_10)>
 {
 public:
 	ExplorerEventsSink(_ExplorerPtr piExplorer);
@@ -16,8 +12,8 @@ public:
 	static _ATL_FUNC_INFO OnCloseInfo;
 
 	BEGIN_SINK_MAP(ExplorerEventsSink)
-		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventFolderSwitch, FolderSwitch, &FolderSwitchInfo)
-		SINK_ENTRY_INFO(2, __uuidof(ExplorerEvents_10), dispidEventClose, OnClose, &OnCloseInfo)
+		SINK_ENTRY_INFO(1, __uuidof(ExplorerEvents_10), dispidEventFolderSwitch, FolderSwitch, &FolderSwitchInfo)
+		SINK_ENTRY_INFO(1, __uuidof(ExplorerEvents_10), dispidEventClose, OnClose, &OnCloseInfo)
 	END_SINK_MAP()
 
 	// ExplorerEvents Methods

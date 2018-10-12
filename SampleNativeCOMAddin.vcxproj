@@ -144,6 +144,7 @@
     <ClCompile Include="Connect.cpp" />
     <ClCompile Include="ExplorerEventsSink.cpp" />
     <ClCompile Include="FormRegionWrapper.cpp" />
+    <ClCompile Include="MailItemEventsSink.cpp" />
     <ClCompile Include="MAPI\Defaults.cpp" />
     <ClCompile Include="MAPI\MapiStubLibrary.cpp" />
     <ClCompile Include="MAPI\StubUtils.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="ExplorerEventsSink.h" />
     <ClInclude Include="FormRegionWrapper.h" />
     <ClInclude Include="ids.h" />
+    <ClInclude Include="MailItemEventsSink.h" />
     <ClInclude Include="MAPI\Defaults.h" />
     <ClInclude Include="outlook.h" />
     <ClInclude Include="resource.h" />

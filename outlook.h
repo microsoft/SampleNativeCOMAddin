@@ -36,3 +36,4 @@ const DISPID dispidEventFolderSwitch = 0xF002;
 const DISPID dispidEventClose = 0xF008;
 const DISPID dispidEventItemSend = 0xF002;
 const DISPID dispidEventItemLoad = 0xFBA7;
+const DISPID dispidEventItemUnload = 0xFBAD;

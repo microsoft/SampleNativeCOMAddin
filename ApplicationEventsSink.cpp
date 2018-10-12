@@ -1,6 +1,7 @@
 #include "ApplicationEventsSink.h"
 #include "MAPIX.h"
 #include "MAPI/TestMAPI.h"
+#include "MailItemEventsSink.h"
 
 _ATL_FUNC_INFO ApplicationEventsSink::OptionsPagesAddInfo = { CC_STDCALL, VT_EMPTY, 1,{ VT_DISPATCH } };
 _ATL_FUNC_INFO ApplicationEventsSink::MapiLogonCompleteInfo = { CC_STDCALL, VT_EMPTY, 0 };
@@ -60,7 +61,8 @@ HRESULT ApplicationEventsSink::ItemSend(IDispatch* /*Item*/, VARIANT_BOOL* /*Can
 	return S_OK;
 }
 
-HRESULT ApplicationEventsSink::ItemLoad(IDispatch* /*Item*/)
+HRESULT ApplicationEventsSink::ItemLoad(IDispatch* MailItem)
 {
+	new MailItemEventsSink(_MailItemPtr{ MailItem });
 	return S_OK;
 }
