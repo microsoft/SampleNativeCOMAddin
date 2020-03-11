@@ -35,7 +35,7 @@ STDMETHODIMP CConnect::OnConnection(
 
 	m_pApplication = pApplication;
 
-	//MessageBoxW(NULL, L"OnConnection fired", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
+	MessageBoxW(NULL, L"OnConnection fired", L"Sample Add-In", MB_OK | MB_ICONINFORMATION);
 
 	m_ApplicationEventSink = new ApplicationEventsSink(m_pApplication);
 
